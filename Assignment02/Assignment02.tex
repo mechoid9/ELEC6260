@@ -126,15 +126,22 @@ Draw a class diagram for the classes required in a basic microwave oven. The sys
 \\
 \emph{Answer:}\\
 \begin{tikzpicture}
+	Class Diagram for a basic microwave oven.
 	\umlclass[x=4, name=MO]{Microwave Oven}{}{}
-	\umlclass[y=-3, name=FP]{Front Panel}{Button: int \\ current-power: int \\ current-time: int \\ cook: bool}{send-command() \\ update-display(): d1, d2, d3, d4}
-	\umlclass[x=-2, y=-7, name=PD]{Panel Display*}{ d1: int, d2: int \\ d3: int, d4: int }{ display( d1, d2, d3, d4 ) }
-	\umlclass[x=4, y=-7, name=KP]{Keypad*}{button: int \\ button-pressed: bool }{pass-button(button): Button}
-	\umlclass[x=8, y=-3, name=MHC]{Microwave Heater Coil*}{on: bool \\ power: int}{set-power()}
-	\umlassoc[mult1=1, mult2=1]{MO}{MHC}
-	\umlassoc[mult1=1, mult2=1]{MO}{FP}
-	\umlassoc[mult1=1, mult2=1]{FP}{PD}
-	\umlassoc[mult1=1, mult2=1]{FP}{KP}
+	\umlclass[x=-2, y=-3, name=FP]{Front Panel}{Button: int \\ current-power: int \\ current-time: int \\ cook: bool}{send-command() \\ update-display(): d1, d2, d3, d4}
+	\umlclass[x=2, y=-7, name=PD]{Panel Display*}{}{ display-time() \\
+		display-power() \\ display-finished() }
+	\umlclass[x=-2, y=-7, name=KP]{Keypad*}{}{send-command()}
+	\umlclass[x=-2, y=-10, name=BB]{Button*}{button-value}{button-pressed()}
+	\umlclass[x=10, y=-3, name=MHC]{Microwave Heater Coil*}{on: bool \\ power: int}{
+		set-power() \\ power-on() \\ power-off()}
+	\umlclass[x=6, y=-3, name=controller]{Controller}{}{}
+	\umluniaggreg[geometry=-|, mult1=1, pos1=0.1, mult2=1, pos2=1.8]{MO}{MHC}
+	\umluniaggreg[geometry=-|, mult1=1, pos1=0.1, mult2=1, pos2=1.8]{MO}{FP}
+	\umluniaggreg[mult1=1, pos1=0.2, mult2=1, pos2=0.8]{FP}{KP}
+	\umluniaggreg[geometry=-|, mult1=1, pos1=0.2, mult2=1, pos2=1.8]{FP}{PD}
+	\umluniaggreg[mult1=1, pos1=0.2, mult2=*, pos2=0.8]{KP}{BB}
+	\umlVHVuniaggreg[mult1=1, pos1=0.2, mult2=1, pos2=2.8]{MO}{controller}
 \end{tikzpicture}
 
 
