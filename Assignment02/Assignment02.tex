@@ -94,14 +94,32 @@ Create a UML state diagram for the \emph{issue-command()} behavior of the \emph{
 \\
 \emph{Answer:}\\
 \begin{tikzpicture}
-	\umlstateinitial[name=initial]
-	\umlnote[x=-2, y=-2 ]{initial}{issue-command() is called}
-	\begin{umlstate}[x=5, name=issue-command, entry=read-command, do=Set-speed]{issue-command()}
-		\end{umlstate}
-	\umlstatefinal[x=10, name=final]
-	\umlnote[x=12, y=-2]{final}{issue-command() sets the speed on the motor-interface.}
-	\umltrans[arg=read-command, pos=0.5]{initial}{issue-command}
-	\umltrans[arg=Set-speed, pos=0.5]{issue-command}{final}
+	\umlbasicstate[name=idle]{Idle State}
+	\umlstatedecision[x=5, name=issue]
+	\umlbasicstate[x=9, name=have]{Have Command}
+	\umlstatedecision[x=9, y=-3, name=type]
+	\umlbasicstate[x=6, y=-6, name=speed]{Get Speed}
+	\umlbasicstate[x=9, y=-6, name=estop]{estop()}
+	\umlbasicstate[x=12, y=-6, name=inert]{Get Inertia}
+	\umlstatedecision[x=6, y=-9, name=speed-current]
+	\umlstatedecision[x=12, y=-9, name=inert-current]
+	\umlbasicstate[x=6, y=-12, name=set-speed]{set-speed()}
+	\umlbasicstate[x=14, y=-12, name=set-inert]{set-inertia()}
+	\umltrans[anchor1=-15, arg=issue-command(), pos=0.5]{idle}{issue}
+	\umlVHVtrans[arm1=-1.5cm, arg=False, pos=1.5]{issue}{idle}
+	\umltrans[anchor2=190, arg=True, pos=0.5]{issue}{have}
+	\umltrans[arg=cmd-type(), pos=0.5]{have}{type}
+	\umlHVtrans[arg=set-command(), pos=0.5]{type}{speed}
+	\umltrans[arg=estop(), pos=0.5]{type}{estop}
+	\umlHVtrans[arg=set-inertia(), pos=0.5]{type}{inert}
+	\umltrans[arg=current-speed(), pos=0.5]{speed}{speed-current}
+	\umltrans[arg=same-inertia(), pos=0.5]{inert}{inert-current}
+	\umlHVtrans[arg=Yes, pos=0.2]{speed-current}{idle}
+	\umltrans[arg=No, pos=0.5]{speed-current}{set-speed}
+	\umlVHVtrans[arm1=-2cm, arg=Done, pos=0.2]{set-speed}{idle}
+	\umlVHVtrans[arm1=-4.7cm, arg=Yes, pos=0.2]{inert-current}{idle}
+	\umlHVtrans[arg=No, pos=0.5]{inert-current}{set-inert}
+	\umlVHVtrans[arm1=-2cm, arg=Done, pos=0.2]{set-inert}{idle}
 \end{tikzpicture}
 
 \subsection*{ Q1-17(a) }%Q1-17(a)
@@ -116,17 +134,42 @@ Show how a \emph{Set-inertia} command flows through the refined class structure 
 \\
 \emph{Answer:}
 
+\newpage
 \subsection*{ Q1-21 }%Q1-21
 Draw a state diagram for a behavior that parses the received bits. The machine should check the address, determine the message type, read the parameters, and check the ECC.
 \\
 \emph{Answer:}
+\\
+\begin{tikzpicture}
+	\umlbasicstate[y=2, name=wait]{Wait}
+	\umlNarynode[x=7, name=RM, below]{Recieve Message}
+	\umlHVHtrans[arg=sample-message, pos=1.5]{wait}{RM}
+	\umlVHVtrans[arm1=4.0cm, arg=False, pos=0.5]{RM}{wait}
+	\umlNarynode[x=12, name=ECC, right]{Check ECC}
+	\umltrans[arg=True, pos=0.5]{RM}{ECC}
+	\umlVHVtrans[arm1=4.0cm, arg=Invalid, pos=0.5]{ECC}{wait}
+	\umlNarynode[x=12, y=-3, name=ADD, right]{Check Address}
+	\umltrans[arg=Valid, pos=0.2]{ECC}{ADD}
+	\umlHVtrans[arg=Invalid, pos=0.1]{ADD}{wait}
+	\umlNarynode[x=12, y=-6, name=MSG, right]{Check Message Type}
+	\umltrans[arg=Valid, pos=0.2]{ADD}{MSG}
+	\umlHVtrans[arg=Invalid, pos=0.1]{MSG}{wait}
+	\umlNarynode[x=12, y=-9, name=PAR, right]{Check Parameters}
+	\umltrans[arg=Valid, pos=0.2]{MSG}{PAR}
+	\umlHVtrans[arg=Invalid, pos=0.1]{PAR}{wait}
+	\umlbasicstate[x=12, y=-12, name=issue]{Issue Command}
+	\umltrans[arg=Valid, pos=0.2]{PAR}{issue}
+	\umlHVtrans[arg=Done, pos=0.1]{issue}{wait}
+\end{tikzpicture}
 
+
+\newpage
 \subsection*{ Q1-22 }%Q1-22
 Draw a class diagram for the classes required in a basic microwave oven. The system should be able to set the microwave power level between 1 and 9 and time a cooking run up to 59 minutes and 59 seconds in one\--second increments. Include \* classes for the physical interfaces to the telephone line, microphone, speaker, and buttons.  
 \\
-\emph{Answer:}\\
+\emph{Answer:} 
+\\
 \begin{tikzpicture}
-	Class Diagram for a basic microwave oven.
 	\umlclass[x=4, name=MO]{Microwave Oven}{}{}
 	\umlclass[x=-2, y=-3, name=FP]{Front Panel}{Button: int \\ current-power: int \\ current-time: int \\ cook: bool}{send-command() \\ update-display(): d1, d2, d3, d4}
 	\umlclass[x=2, y=-7, name=PD]{Panel Display*}{}{ display-time() \\
@@ -143,8 +186,6 @@ Draw a class diagram for the classes required in a basic microwave oven. The sys
 	\umluniaggreg[mult1=1, pos1=0.2, mult2=*, pos2=0.8]{KP}{BB}
 	\umlVHVuniaggreg[mult1=1, pos1=0.2, mult2=1, pos2=2.8]{MO}{controller}
 \end{tikzpicture}
-
-
 
 %  \begin{figure}[htbp]
 %   \centering
