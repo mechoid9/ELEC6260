@@ -1,0 +1,33 @@
+Assignment04 - ELEC6260 Problem Set 2, problems 2 & 3
+
+Problems 2 and 3 ­ Due Friday, 2/1/13 at class time.
+
+Do the following in ARM assembly. 
+Execute and Debug in the Keil MDK-ARM debugger. 
+All program variables are to be 32-bit integers. 
+Choose my own test variables.
+
+P2:
+
+Implement the following C code, to exercise program control statements. Place mm, nn,
+jj and cc in the code area, with initial values defined by DCD directives, and place kk
+and xx in the data area. Circle the values of kk and xx in the final debug window.
+
+Execute this twice. Once for a TRUE condition, and once for a FALSE condition.
+
+	if ((mm-nn) <15) {
+		kk = jj - 5;
+		xx = 0;
+	} else {
+		kk = cc +18;
+		xx = 1;
+	}
+
+P3:
+
+Implement the following C code, to exercise memory addressing modes to handles arrays.
+Place arrays aa and bb in the code area, with initial values. Place variables i and array zz in
+the data area. Circle the final values of i and zz in the debug window.
+
+	for(I=0; i<15; i++)
+		zz[i] = aa[i] - bb[i] +5;
