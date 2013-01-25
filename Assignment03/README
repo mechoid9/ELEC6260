@@ -1,0 +1,14 @@
+Assignment03 - ELEC6260 Problem Set 2, problem 1
+
+Problem 1 ­ Due Tuesday, 1/29/13 by 11 am.
+
+Do the following in ARM assembly. 
+Execute and Debug in the Keil MDK-ARM debugger. 
+All program variables are to be 32-bit integers. 
+Choose my own test variables.
+
+ Compute: zz = aa*(bb+cc) ­ (dd*35);
+ Place aa,bb,cc,dd in your code area, so that you can provide initial values with "DCD"
+ assembler directives. Please zz in the data area, so that you can write the result to it. The
+ final debug window should show the final value of zz in memory.
+
