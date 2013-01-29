@@ -102,12 +102,12 @@ STM32F4-DISCOVERY board. All program variables are to be 32-bit integers. You ma
 your own test data values.\\
 
 Compute:\\ \texttt{zz = aa*(bb+cc) ­ (dd*35)}\\
- Place aa,bb,cc,dd in the code area, so that you can provide initial values with "DCD"
+ Place aa, bb, cc, and dd in the code area, so that you can provide initial values with ``DCD''
  assembler directives. Place zz in the data area, so that you can write the result to it. The
  final debug window should show the final value of zz in memory.
 
 \section*{ Debugging }
-The ARM assembly language program was written inside a Linux environment, with the expectation that it would be compiled against an "ARM" version of gcc (\texttt{arm-none-eabi-as}). The compiler did not accept the line labels, and would not compile the code. This lead to the code being debugged on a school computer. The school computers do not have the proper drivers installed to communicate with the STM32F4, so the program was debugged inside the Simulator. Because the program was installed inside the simulator, the Target addresses for the ROM and RAM portions were left at their default values (0x8000000 and 0x20000000, respectively). The ``Memory'' section of the debugger is displayed in Figure~\ref{fig:memory}, and the value of zz has been circled. The expected value for zz is -135, and this is the value stored in the memory location for zz. Therefore, the program worked as expected. 
+The ARM assembly language program was written inside a Linux environment, with the expectation that it would be compiled against an ``ARM'' version of gcc (\texttt{arm-none-eabi-as}). The compiler did not accept the line labels, and would not compile the code. This lead to the code being debugged on a school computer. The school computers do not have the proper drivers installed to communicate with the STM32F4, so the program was debugged inside the Simulator. Because the program was debugged inside the simulator, the Target addresses for the ROM and RAM portions were left at their default values (0x08000000 and 0x20000000, respectively). The ``Memory'' section of the debugger is displayed in Figure~\ref{fig:memory}, and the value of zz has been circled. The expected value for zz is -135, and this is the value stored in the memory location for zz. Therefore, the program worked as expected. 
 
 \begin{figure}
 	\centering
