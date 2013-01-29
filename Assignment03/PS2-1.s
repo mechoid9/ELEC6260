@@ -11,7 +11,7 @@
 	AREA	reset, CODE
 			; Name this CODE block, reset
 	ENTRY		; Mark first instruction to execute
-Reset_Hanler		; aa*(bb+cc)
+			; aa*(bb+cc)
 	LDR r4, =bb0	; Get address of bb0
 	LDR r0, [r4]	; Store value of bb0 in r0
 	LDR r4, =cc0	; Get address of cc0
