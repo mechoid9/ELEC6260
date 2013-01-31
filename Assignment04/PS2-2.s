@@ -35,7 +35,7 @@
 	CMP r0, r1	; Compare (mm-nn) < 15
 	BLT true	; if true, branch to true
 false	; False Block
-	LDR r4, =cc	; Get Address for cc0
+	LDR r4, =cc0	; Get Address for cc0
 	LDR r0, [r4]	; Store to r0
 	MOV r1, #18	; Set r1 to #18
 	ADD r0, r0, r1	; r0 = cc + 18
@@ -58,7 +58,7 @@ true	; True Block
 m	B m  		; Branch to m, never end
 	; Define the value of the 4 input variables
 mm0	DCD 0x1E	; mm = 30
-nn0	DCD 0x14	; nn = 20
+nn0	DCD 0x14	; nn = 10
 jj0	DCD 0x0A	; jj = 10
 cc0	DCD 0x02	; cc = 2
 
