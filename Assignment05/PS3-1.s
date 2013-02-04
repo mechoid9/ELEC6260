@@ -19,14 +19,14 @@
 	; Begin
 	ENTRY
 main	LDR r13, =StackEnd
-	LDR r0, =a0		; get a0
-	LDR r4, [r0]		;  r4 = a0
-	LDR r0, =x0		; get x0
-	LDR r5, [r0]    	;  r5 = x0
-	LDR r0, =a1		; get a1
-	LDR r6, [r0]    	;  r6 = a1
-	LDR r0, =x1		; get x1
-	LDR r7, [r0]    	;  r7 = x1
+	LDR r0, =a0_1		; get a0_1
+	LDR r4, [r0]		;  r4 = a0_1
+	LDR r0, =x0_1		; get x0_1
+	LDR r5, [r0]    	;  r5 = x0_1
+	LDR r0, =a1_1		; get a1_1
+	LDR r6, [r0]    	;  r6 = a1_1
+	LDR r0, =x1_1		; get x1_1
+	LDR r7, [r0]    	;  r7 = x1_1
 	LDR r8, =z1		; get address for z1
 	; Load variables into stack
 	STR r8, [r13, #-4]!	; PUSH =z1 to stack
@@ -37,15 +37,15 @@ main	LDR r13, =StackEnd
 	; Branch to sub-routine (for first run)
 	BL subroutine	; Branch to subroutine
 	; Return from subroutine, get new values
-	LDR r0, =a0		; get a0
-	LDR r4, [r0, #4]	;  r4 = a0 + #4
-	LDR r0, =x0		; get x0
-	LDR r5, [r0, #4]	;  r5 = x0 + #4
-	LDR r0, =a1		; get a1
-	LDR r6, [r0, #4]	;  r6 = a1 + #4
-	LDR r0, =x1		; get x0
-	LDR r7, [r0, #4]	;  r7 = x1 + #4
-	LDR r8, =z1		; get address for z1
+	LDR r0, =a0_2		; get a0_2
+	LDR r4, [r0]		;  r4 = a0_2
+	LDR r0, =x0_2		; get x0_2
+	LDR r5, [r0]		;  r5 = x0_2
+	LDR r0, =a1_2		; get a1_2
+	LDR r6, [r0]		;  r6 = a1_2
+	LDR r0, =x1_2		; get x0_2
+	LDR r7, [r0]		;  r7 = x1_2
+	LDR r8, =z2		; get address for z1
 	; Load variables into stack
 	STR r8, [r13, #-4]!	; PUSH =z1 to stack
 	STR r7, [r13, #-4]!	; PUSH x1 to stack
@@ -71,15 +71,20 @@ subroutine
 	STR r0, [r8]		; Store the result
 	BX r14		; Return from subroutine
 	; Define the variables
-a0	DCD 0x0540,0x0380	; 5.25, 3.5
-a1	DCD 0x006C0,0x0420	; 6.75, 4.125
-x0	DCD 200,300
-x1	DCD 100,200
+a0_1	DCD 0x0540	; 5.25
+a0_2	DCD 0x0380	; 3.5
+a1_1	DCD 0x06c0	; 6.75
+a1_2	DCD 0x0420	; 4.125
+x0_1	DCD 200
+x0_2	DCD 300
+x1_1	DCD 100
+x1_2	DCD 200
 	; Define the  DATA block
 	AREA	data1, DATA
 	; Set aside stack area
-
+Stack 	SPACE 20		; Make stack 5 words long
 StackEnd
 	; Set space aside for variables
 z1	SPACE 4
 z2	SPACE 4
+	END
