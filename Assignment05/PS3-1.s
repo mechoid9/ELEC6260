@@ -15,10 +15,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	; Define the CODE block
-	AREA	RESET, CODE
+	AREA	RESET, CODE, READONLY
 	; Begin
 	ENTRY
-main	LDR r13, =StackEnd
+__main	LDR r13, =StackEnd
 	LDR r0, =a0_1		; get a0_1
 	LDR r4, [r0]		;  r4 = a0_1
 	LDR r0, =x0_1		; get x0_1
