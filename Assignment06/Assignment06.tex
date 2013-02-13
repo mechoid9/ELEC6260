@@ -1,0 +1,245 @@
+\documentclass{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+% \usepackage{fullpage, fancyhdr}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{sidecap} % enable side captions
+\usepackage{subcaption}
+\usepackage{portland}
+\usepackage{graphicx}
+%\usepackage{setspace}
+\setlength{\topmargin}{0.0in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{9pt}
+
+% Use for circuitikz/tikz
+\usepackage[american]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{tikz-dsp}
+
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\newcommand{\z}{\mathpzc{z}}
+
+% Use so that included code is pretty
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},  % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                % sets automatic line breaking
+  captionpos=t,                   % sets the caption-position to bottom
+  commentstyle=\color{dkgreen},   % comment style
+%   deletekeywords={...},           % if you want to delete keywords from the given language
+%   escapeinside={\%*}{*)},         % if you want to add LaTeX within your code
+%   extendedchar=false,             % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                   % adds a frame around the code
+  keywordstyle=\color{blue},      % keyword style
+  language={[x86masm]Assembler},                % the language of the code
+  morekeywords={LDR,AREA,ENTRY,CODE,DATA,DCD,SPACE,BLT,B,BL.W,ADDS,VMOV,IN,ZAP,MAC,APAC,ADD,SACH,MACD,OUT,},           % if you want to add more keywords to the set
+  numbers=left,                   % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,               % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,         % underline spaces within strings only
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mauve},      % string literal style
+  tabsize=8,                      % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+
+% \pagestyle{fancyplain}
+\pagestyle{myheadings}
+\voffset=-0.50in
+\topmargin=0.00in 
+\headsep=0.25in 
+\evensidemargin=0in 
+\oddsidemargin=0in 
+\textwidth=6.6in 
+\textheight=10.0in 
+
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%   Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}     % 2 may work better
+\setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+\renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+% remember to use [htp] or [htpb] for placement
+
+\title{Assignment \# 6: Problem Set 4, Problem 1}
+\date{2/12/2013}
+\author{Brian Arnberg}
+
+\markright{Brian Arnberg\hfill ELEC 6260 - Embedded Computing Systems\hfill}     
+\setlength{\parindent}{0pt}
+
+
+\begin{document}\label{start}
+
+% \begin{titlepage}
+% 	\maketitle
+% 	\thispagestyle{empty}
+% \end{titlepage}
+
+\section*{Assignment \# 6: Problem Set 4, Problem 1 - Due 2/13/2013}
+
+\begin{SCfigure}[50][h]
+\begin{tikzpicture}
+
+
+	\matrix[row sep=6.0mm, column sep=08mm]
+	{
+		%--------------------------------------------------------------------
+		\node[dspnodeopen,dsp/label=left] 	(m00) {$x(n)$};   	&
+		\node[dspadder]		           	(m01) {};          	&
+		\node[dspnodefull,dsp/label=above] 	(m02) {$v_0$};     	&
+		\node[dspadder]		           	(m03) {};          	&
+		\node[dspnodeopen,dsp/label=right] 	(m04) {$y(n)$};	      	\\
+		%--------------------------------------------------------------------
+		\node[coordinate]			(m10) {};		&
+		\node[coordinate]			(m11) {};		&
+		\node[dspsquare]			(m12) {$z^{-1}$};	&
+		\node[coordinate]			(m13) {};		&
+		\node[coordinate]			(m14) {};		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]			(m20) {};		&
+		\node[dspadder]		           	(m21) {};          	&
+		\node[dspnodefull]                 	(m22) {}; 	     	&
+		\node[dspadder]		           	(m23) {};          	&
+		\node[coordinate]			(m24) {};		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]			(m30) {};		&
+		\node[coordinate]			(m31) {};		&
+		\node[dspsquare]			(m32) {$z^{-1}$};	&
+		\node[coordinate]			(m33) {};		&
+		\node[coordinate]			(m34) {};		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]			(m40) {};		&
+		\node[dspadder]		           	(m41) {};          	&
+		\node[dspnodefull]		 	(m42) {};     		&
+		\node[dspadder]		           	(m43) {};          	&
+		\node[coordinate]			(m44) {};		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]			(m50) {};		&
+		\node[coordinate]			(m51) {};		&
+		\node[dspsquare]			(m52) {$z^{-1}$};	&
+		\node[coordinate]			(m53) {};		&
+		\node[coordinate]			(m54) {};		\\
+		%--------------------------------------------------------------------
+		\node[coordinate]			(m60) {};		&
+		\node[dspadder]		           	(m61) {};          	&
+		\node[dspnodefull]                 	(m62) {};     	&
+		\node[dspadder]		           	(m63) {};          	&
+		\node[coordinate]			(m64) {};		\\
+		%--------------------------------------------------------------------
+	};
+
+	% Flow accross the top
+	\draw[dspconn] (m00) -- (m01);	
+	\draw[dspline] (m01) -- (m02);	
+	\draw[dspconn] (m02) -- node[near end,above] {$b_0$} (m03);	
+	\draw[dspconn] (m03) -- (m04);
+	% Go down the middle
+	\draw[dspconn] (m02) -- (m12);	
+	\draw[dspline] (m12) -- node[very near end,right] {$v_1$} (m22);	
+	\draw[dspconn] (m22) -- (m32);	
+	\draw[dspline] (m32) -- node[very near end,right] {$v_2$} (m42);	
+	\draw[dspconn] (m42) -- (m52);	
+	\draw[dspline] (m52) -- node[very near end,right] {$v_3$} (m62);	
+	% Branch left
+	\draw[dspconn] (m62) -- node[near end,above] {$b_3$} (m63);
+	\draw[dspconn] (m42) -- node[near end,above] {$b_2$} (m43);
+	\draw[dspconn] (m22) -- node[near end,above] {$b_1$} (m23);
+	% Branch left
+	\draw[dspconn] (m62) -- node[near end, above] {$-a_3$} (m61);
+	\draw[dspconn] (m42) -- node[near end, above] {$-a_2$} (m41);
+	\draw[dspconn] (m22) -- node[near end, above] {$-a_1$} (m21);
+	% Branch up (on left side)
+	\draw[dspconn] (m61) -- (m41);
+	\draw[dspconn] (m41) -- (m21);
+	\draw[dspconn] (m21) -- (m01);
+	% Branch up (on right side)
+	\draw[dspconn] (m63) -- (m43);
+	\draw[dspconn] (m43) -- (m23);
+	\draw[dspconn] (m23) -- (m03);
+\end{tikzpicture}
+\caption{
+Shown to the left is the design of an ``IIR direct form type II filter,'' described in Chapter 5 of the
+text. Design a program for the TMS 32C5x DSP, discussed in class, to implement this filter,
+using the format of the class examples. Data sample x(n) is to be read from an input port, and
+filter output y(n) is to be sent to an output port, as in the ``Low Pass Filter'' example in the class
+slides. The values a1, a2, a3, b0, b1, b2, b3 are constants, stored in program memory. Variables
+v0, v1, v2, v3 are to be stored in data memory. You may assume that all values are in the ``proper
+format'' to use for this calculation, as shown in the examples on the class slides.
+	Submit the source program (typed or hand written).
+	On the submitted program, show how you have the variables arranged and stored in
+         memory.
+ }
+\end{SCfigure}
+
+\lstinputlisting{PS4_1.s}
+
+% \begin{signalflow}{IIR direct form type II filter}
+% 	\begin{scope}
+% 		\node[input] (in) 			{$x(n)$};
+% 		\node[adder] (a0) [right from=in]	{};
+% 		\node[node]  (v0) [right from=a0]	{$v_0$};
+% 		\node[adder] (b0) [right from=v0]	{\nodepart{above}{$b_0$}};
+% 		\node[output] (yn) [right from=b0]	{$y(n)$};
+% 
+% 		\path[r>] (in) -- (a0);
+% 		\path[r>] (a0) -- (v0);
+% 		\path[r>] (v0) -- (b0);
+% 		\path[r>] (b0) -- (yn);
+% 	\end{scope}
+%     % - delay element
+% %     \begin{scope}
+% %         \node[input]  (in)                   {$x(t)$};
+% %         \node[delay]  (del) [right from=in]  {$T$};
+% %         \node[output] (out) [right from=del] {$x(t-T)$};
+% %         % signal paths
+% %         \path[r>] (in)  -- (del);
+% %         \path[r>] (del) -- (out);
+% %     \end{scope}
+%     % - filter
+% \end{signalflow}
+
+
+
+
+%  \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=4.0in,keepaspectratio]{E-Field}
+%   \caption{\small{ The E-Field pattern produced by the initial code. }}
+%   \label{fig:E-Field}
+%   \end{figure}
+%  \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=4.0in,keepaspectratio]{Power}
+%   \caption{\small{ The normalized power pattern of the system.  }}
+%   \label{fig:Power}
+%   \end{figure}
+
+\label{end}\end{document}
+
+
