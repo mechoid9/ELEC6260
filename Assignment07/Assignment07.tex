@@ -1,4 +1,5 @@
 \documentclass{article}
+\special{papersize=8.5in,11in}
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 % \usepackage{fullpage, fancyhdr}
 \usepackage{fullpage}
@@ -21,8 +22,7 @@
 \usepackage{pgf-umlsd}
 \usepgflibrary{arrows}
 \usetikzlibrary{shapes,arrows,shadows}
-% \usepackage[english]{babel} % Include this to prevent tikz-uml from hic-cuping on nested umlcall's. 
-
+\usetikzlibrary{shapes.geometric}
 
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 \newcommand{\z}{\mathpzc{z}}
@@ -329,9 +329,117 @@ Q3-6, Q3-8, Q3-9, Q3-12, Q3-12, Q3-13, Q3-15, Q3-16, Q3-19.
 
 \begin{figure}[h]
 	\centering
-	\caption{Three devices are attached to a microprocessor: Device 1 has highest priority and device 3 has lowest priority. Each device's interrupt handler takes 5 time unites to execute. Show what interrupt handler (if any) is executing at each time given the sequency of device interrupts displayed below.}
-	\includegraphics[width=\textwidth,keepaspectratio]{Q3-19}
+	\caption{Three devices are attached to a microprocessor: Device 1 has highest priority and device 3 has lowest priority. Each device's interrupt handler takes 5 time unites to execute. Show what interrupt handler (if any) is executing at each time given the sequence of device interrupts displayed below.}
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=\textwidth,keepaspectratio]{Q3-19}
+		\caption{Device Interrupt Timing}
+	\end{subfigure}
+% Agents
+\def\DA{Device 1}
+\def\DB{Device 2}
+\def\DC{Device 3}
+
+	\begin{subfigure}[b]{\textwidth}
+		\centering
+% Diagram for Q3-19
+\begin{tikzpicture}[every node/.style={font=\normalsize,minimum height=0.25cm,minimum width=0.5cm},]
+	
+	% Matrix
+	\node [matrix, very thin,column sep=1.3cm,row sep=0.005cm] (matrix) at (0,0) {
+	  & \node(0,0) (\DA) {}; & & \node(0,0) (\DB) {}; &  & \node(0,0) (\DC) {}; & \\
+	  \node(0,0) (tt left) {}; & & & & & & \node(0,0) (tt right) {};\\
+	  \node(0,0) (t0 left) {}; & & & & & & \node(0,0) (t0 right) {};\\
+	  & \node(0,0) (\DA 1) {}; & & \node(0,0) (\DB 1) {}; & & \node(0,0) (\DC 1) {}; &\\
+	  & \node(0,0) (\DA 2) {}; & & \node(0,0) (\DB 2) {}; & & \node(0,0) (\DC 2) {}; &\\
+	  & \node(0,0) (\DA 3) {}; & & \node(0,0) (\DB 3) {}; & & \node(0,0) (\DC 3) {}; & \\
+	  & \node(0,0) (\DA 4) {}; & & \node(0,0) (\DB 4) {}; & & \node(0,0) (\DC 4) {}; & \\
+	  \node(0,0) (t1 left) {}; & & & & & & \node(0,0) (t1 right) {};\\
+	  & \node(0,0) (\DA 6) {}; & & \node(0,0) (\DB 6) {}; & & \node(0,0) (\DC 6) {}; & \\
+	  & \node(0,0) (\DA 7) {}; & & \node(0,0) (\DB 7) {}; & & \node(0,0) (\DC 7) {}; & \\
+	  & \node(0,0) (\DA 8) {}; & & \node(0,0) (\DB 8) {}; & & \node(0,0) (\DC 8) {}; & \\
+	  & \node(0,0) (\DA 9) {}; & & \node(0,0) (\DB 9) {}; & & \node(0,0) (\DC 9) {}; & \\ 
+	  \node(0,0) (t2 left) {}; & & & & & & \node(0,0) (t2 right) {};\\
+	  & \node(0,0) (\DA 11) {}; & & \node(0,0) (\DB 11) {}; & & \node(0,0) (\DC 11) {}; & \\
+	  & \node(0,0) (\DA 12) {}; & & \node(0,0) (\DB 12) {}; & & \node(0,0) (\DC 12) {}; & \\
+	  & \node(0,0) (\DA 13) {}; & & \node(0,0) (\DB 13) {}; & & \node(0,0) (\DC 13) {}; & \\
+	  & \node(0,0) (\DA 14) {}; & & \node(0,0) (\DB 14) {}; & & \node(0,0) (\DC 14) {}; & \\  
+	  \node(0,0) (t3 left) {}; & & & & & & \node(0,0) (t3 right) {};\\
+	  & \node(0,0) (\DA 16) {}; & & \node(0,0) (\DB 16) {}; & & \node(0,0) (\DC 16) {}; & \\
+	  & \node(0,0) (\DA 17) {}; & & \node(0,0) (\DB 17) {}; & & \node(0,0) (\DC 17) {}; & \\
+	  & \node(0,0) (\DA 18) {}; & & \node(0,0) (\DB 18) {}; & & \node(0,0) (\DC 18) {}; & \\
+	  & \node(0,0) (\DA 19) {}; & & \node(0,0) (\DB 19) {}; & & \node(0,0) (\DC 19) {}; & \\  
+	  \node(0,0) (t4 left) {}; &\node(0,0) (\DA 20) {};  & & & & \node(0,0) (\DC 20) {}; & \node(0,0) (t4 right) {};\\
+	  & \node(0,0) (\DA 21) {}; & & \node(0,0) (\DB 21) {}; & & \node(0,0) (\DC 21) {}; & \\
+	  & \node(0,0) (\DA 22) {}; & & \node(0,0) (\DB 22) {}; & & \node(0,0) (\DC 22) {}; & \\
+	  & \node(0,0) (\DA 23) {}; & & \node(0,0) (\DB 23) {}; & & \node(0,0) (\DC 23) {}; & \\
+	  & \node(0,0) (\DA 24) {}; & & \node(0,0) (\DB 24) {}; & & \node(0,0) (\DC 24) {}; & \\  
+	  \node(0,0) (t5 left) {}; & & & & & & \node(0,0) (t5 right) {};\\
+	  & \node(0,0) (\DA 26) {}; & & \node(0,0) (\DB 26) {}; & & \node(0,0) (\DC 26) {}; & \\
+	  & \node(0,0) (\DA 27) {}; & & \node(0,0) (\DB 27) {}; & & \node(0,0) (\DC 27) {}; & \\
+	  & \node(0,0) (\DA 28) {}; & & \node(0,0) (\DB 28) {}; & & \node(0,0) (\DC 28) {}; & \\
+	  & \node(0,0) (\DA 29) {}; & & \node(0,0) (\DB 29) {}; & & \node(0,0) (\DC 29) {}; & \\  
+	  \node(0,0) (t6 left) {}; & & & & & & \node(0,0) (t6 right) {};\\
+	  & \node(0,0) (\DA 31) {}; & & \node(0,0) (\DB 31) {}; & & \node(0,0) (\DC 31) {}; & \\
+	  & \node(0,0) (\DA 32) {}; & & \node(0,0) (\DB 32) {}; & & \node(0,0) (\DC 32) {}; & \\
+	  & \node(0,0) (\DA 33) {}; & & \node(0,0) (\DB 33) {}; & & \node(0,0) (\DC 33) {}; & \\
+	  & \node(0,0) (\DA 34) {}; & & \node(0,0) (\DB 34) {}; & & \node(0,0) (\DC 34) {}; & \\  
+	  \node(0,0) (t7 left) {}; & & & & & & \node(0,0) (t7 right) {};\\
+	  & \node(0,0) (\DA 36) {}; & & \node(0,0) (\DB 36) {}; & & \node(0,0) (\DC 36) {}; & \\
+	  & \node(0,0) (\DA 37) {}; & & \node(0,0) (\DB 37) {}; & & \node(0,0) (\DC 37) {}; & \\
+	  & \node(0,0) (\DA 38) {}; & & \node(0,0) (\DB 38) {}; & & \node(0,0) (\DC 38) {}; & \\
+	  & \node(0,0) (\DA 39) {}; & & \node(0,0) (\DB 39) {}; & & \node(0,0) (\DC 39) {}; & \\  
+	  \node(0,0) (t8 left) {}; & & & & & & \node(0,0) (t8 right) {};\\
+	  & \node(0,0) (\DA 41) {}; & & \node(0,0) (\DB 41) {}; & & \node(0,0) (\DC 41) {}; & \\
+	  };
+
+	% Agents labels
+	\fill 
+	(\DA) node[draw,fill=gray] {\DA}
+	(\DB) node[draw,fill=gray] {\DB}
+	(\DC) node[draw,fill=gray] {\DC};
+	
+	% Horizontal time lines
+	\draw [dotted] 
+	  (t0 left) -- (t0 right) node[right] {$0$}
+	  (t1 left) -- (t1 right) node[right] {$5$}
+	  (t2 left) -- (t2 right) node[right] {$10$}
+	  (t3 left) -- (t3 right) node[right] {$15$}
+	  (t4 left) -- (t4 right) node[right] {$20$}
+	  (t5 left) -- (t5 right) node[right] {$25$}
+	  (t6 left) -- (t6 right) node[right] {$30$}
+	  (t7 left) -- (t7 right) node[right] {$35$}
+	  (t8 left) -- (t8 right) node[right] {$40$};
+	
+	% Vertical lifelines
+	\draw [dashed] 
+	  (\DA.south) -- (\DA 41)
+	  (\DB.south) -- (\DB 41)
+	  (\DC.south) -- (\DC 41);
+	
+	% Blocks (Handler Execution)
+	\filldraw[fill=blue!20]
+	  (\DA 1.north west) rectangle (\DA 6.north east)
+	  (\DB 6.north west) rectangle (\DB 11.north east)
+	  (\DC 11.north west) rectangle (\DC 16.north east)
+	  (\DC 16.north west) rectangle (\DC 20.mid east)
+	  (\DA 20.mid west) rectangle (\DA 26.north east)
+	  (\DB 26.north west) rectangle (\DB 31.north east)
+	  (\DC 31.north west) rectangle (\DC 32.north east)
+	  (\DC 32.north west) rectangle (\DC 37.north east);
+	
+	% Horizontal flows (Monetary interactions)
+	\draw [-latex] (\DA 6.north east) -- (\DB 6.north west);
+	\draw [-latex] (\DB 11.north east) -- (\DC 11.north west);
+	\draw [-latex] (\DC 20.mid west) -- (\DA 20.mid east);
+	\draw [-latex] (\DA 26.north east) -- (\DB 26.north west);
+	\draw [-latex] (\DB 31.north east) -- (\DC 31.north west);
+	
+	\end{tikzpicture}
+\caption{Sequence Diagram for Interrupt Handlers}
+\end{subfigure}
 \end{figure}
+
 
 % -----------------------------------------------%
 %  \begin{figure}[htbp]
