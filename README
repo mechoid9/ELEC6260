@@ -1,7 +1,20 @@
 ELEC 6260 - Embedded Computing Systems
-Sprint Term, 2013
+Spring Term, 2013
 Dr. Nelson
 http://www.eng.auburn.edu/~nelson/courses/elec5260_6260/
 
-Special LaTex Library:
+(For Compiling Documents)
+Required LaTex Libraries:
+tikz
+  shapes,arrows,shadows,shapes.geometry
+pgf
+  arrows
+Required LaTex Packages:
 texlive-tikzuml (in AUR)
+pgf-umlsd (bundled)
+
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepgflibrary{arrows}
+\usetikzlibrary{shapes,arrows,shadows}
+\usetikzlibrary{shapes.geometric}
