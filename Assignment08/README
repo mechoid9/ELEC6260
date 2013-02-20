@@ -1,0 +1,52 @@
+Assignment08
+ELEC 5260/6260 Problems Set #5
+Due Friday, 2/22/2013
+
+To practice with parallel I/O ports, write a program that creates and displays one of two patterns
+on the 4 LEDs on the Discovery board. Under the control of the user push button (the blue
+button).
+               LED3                            LED3 (orange) = I/O port pin PD13
+                                               LED4 (green) = I/O port pin PD12
+        LED4           LED5                    LED5 (red)      = I/O port pin PD14
+                                               LED6 (blue)     = I/O port pin PD15
+               LED6                            User button (blue) = I/O port pin PA0
+
+
+The program is to operate as follows.
+   1. Initially, all LEDs are off.
+   2. On the first press of the user button, the LEDs should be turned on with the following
+       pattern:
+       LED3 ­ LED4 ­ LED6 ­ LED5 ­ ALL OFF (each LED remains ON until ALL OFF)
+       This pattern is to be repeated until the next button press. Note that you should see LEDs
+       turn on in a counter-clockwise circle.
+       Each step of the pattern is to be held for exactly one-half second.
+   3. On the next press of the user button, the LED pattern is to change to the following:
+       LED3 ­ LED5 ­ LED6 ­ LED4 ­ ALL OFF (each LED remains ON until ALL OFF)
+       This pattern is to be repeated until the next button press. Note that you should see LEDs
+       turn on in a clockwise circle.
+       Each step of the pattern is to be held for exactly one-half second.
+   4. On the next button press, return to step 1 (all LEDs off). Then repeat steps 1-4
+       continuously.
+
+The program is to contain the following modules:
+   1. An output handler, written in ARM assembly language, which writes patterns to the
+       LEDs.
+   2. An input handler, written in ARM assembly language, which tests the user button, and
+       sets a global variable.
+   3. A system tick timer interrupt handler, written in C, which is activated every one-half
+       second. This routine should call the output handler, if the LEDs are to be changed.
+   4. A main program, written in C, which executes in a continuous loop, calling the input
+       handle every time through the loop.
+   5. The "startup code" for the STM32F4-Discovery board, as found in the Keil installation
+       directory: C:/Keil/ARM/Boards/ST/STM32F4-Discovery/Blinky
+   6. The STM32F4xx microcontrollers "include file", found in the Keil installation directory:
+       C:/Keil/ARM/INC/ST/STM32F4xx/stm32f4xx.h
+
+Testing and submitting the program:
+The program can be tested in RAM on the board or in flash memory. The final version should be
+programmed into the flash memory of the board, so that the program can be demonstrated
+without being connected to the Keil debugger.
+Print and submit the source program, and also email it to me.
+Rather than printing multiple debug windows, bring your programmed board to my office and
+demonstrate the program to me.
+
