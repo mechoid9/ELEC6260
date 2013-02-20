@@ -10,7 +10,7 @@
 /*******************************************************/
 
 
-interrupt void SysTick_Timer ( void ) {
+interrupt void SysTick_Handler ( void ) {
 	if (state != 1) { 		// if not state 1
 		output_handler(); 	// write to LEDS 
 	}				// else, return

@@ -22,8 +22,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 GPIOD	EQU 0x40020C00		;; general purpose I/O, port D
-BSRRL	EQU 0x18		;; port D reset
-BSRRH	EQU 0x1A		;; port D set
+BSRRL	EQU 0x18		;; port D set
+BSRRH	EQU 0x1A		;; port D reset
 
 	AREA OUTPUT, CODE
 	EXPORT output_handler
@@ -57,7 +57,7 @@ clear_leds	;; clear the LEDS
 loop_clear
 	MOV r4, r4, lsl r5	;; bit shift r4 by r5
 	LDR r6, =GPIOD		;; address of GPIOD
-	STR r4, [r6, #BSRRL]	;; reset the pin
+	STR r4, [r6, #BSRRH]	;; reset the pin
 	MOV r4, r4, lsl #1	;; bit shift r4 once
 	CMP r4, #15		;; if (r4 <= 15) 
 	BLE loop_clear		;; then branch to loop_clear
@@ -69,7 +69,7 @@ counter_clockwise
 	LDR r5, [r7, r2]	;; r5 is the step value for ccw	
 	MOV r4, r4, lsl r5	;; bit shift r4 by r5
 	LDR r6, =GPIOD		;; address of GPIOD
-	STR r4, [r6, #BSRRH]	;; set the pin
+	STR r4, [r6, #BSRRL]	;; set the pin
 	ADD r2, r2, #4		;; increment step
 	B exit			;; branch to exit
 
@@ -79,7 +79,7 @@ clockwise
 	LDR r5, [r7, r2]	;; r5 is the step value for ccw	
 	MOV r4, r4, lsl r5	;; bit shift r4 by r5
 	LDR r6, =GPIOD		;; address of GPIOD
-	STR r4, [r6, #BSRRH]	;; set the pin
+	STR r4, [r6, #BSRRL]	;; set the pin
 	ADD r2, r2, #4		;; increment step
 	B exit			;; branch to exit
 
