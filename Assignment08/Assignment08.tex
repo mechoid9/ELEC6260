@@ -1,0 +1,169 @@
+\documentclass{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+% \usepackage{fullpage, fancyhdr}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{portland}
+\usepackage{graphicx}
+%\usepackage{setspace}
+\setlength{\topmargin}{0.0in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{9pt}
+
+% Use so that included code is pretty
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},  % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                % sets automatic line breaking
+  captionpos=t,                   % sets the caption-position to bottom
+  commentstyle=\color{dkgreen},   % comment style
+%   deletekeywords={...},           % if you want to delete keywords from the given language
+%   escapeinside={\%*}{*)},         % if you want to add LaTeX within your code
+%   extendedchar=false,             % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                   % adds a frame around the code
+  keywordstyle=\color{blue},      % keyword style
+  language={[x86masm]Assembler},                % the language of the code
+  morekeywords={LDR,AREA,ENTRY,CODE,DATA,DCD,SPACE,BLT,B,BL.W,ADDS,VMOV,MOVEQ,BEQ,BLE,IMPORT,EXPORT,BGT,},           % if you want to add more keywords to the set
+  numbers=left,                   % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,               % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,         % underline spaces within strings only
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mauve},      % string literal style
+  tabsize=8,                      % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+
+% \pagestyle{fancyplain}
+\pagestyle{myheadings}
+\voffset=-0.50in
+\topmargin=0.00in 
+\headsep=0.25in 
+\evensidemargin=0in 
+\oddsidemargin=0in 
+\textwidth=6.6in 
+\textheight=10.0in 
+
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%   Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}     % 2 may work better
+\setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+\renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+% remember to use [htp] or [htpb] for placement
+
+\title{Assignment \# 8: Problem Set 5}
+\date{2/22/2013}
+\author{Brian Arnberg}
+
+\markright{Brian Arnberg\hfill ELEC 6260 - Embedded Computing Systems\hfill}     
+\setlength{\parindent}{0pt}
+
+
+\begin{document}\label{start}
+
+% \begin{titlepage}
+% 	\maketitle
+% 	\thispagestyle{empty}
+% \end{titlepage}
+
+
+\section*{Assignment \#8: Problem Set 5 - Due Fri. 02/22/13}
+
+To practice with parallel I/O ports, write a program that creates and displays one of two patterns
+on the 4 LEDs on the Discovery board. Under the control of the user push button (the blue
+button).
+
+LED3 (orange) = I/O port pin PD13\\
+LED4 (green) = I/O port pin PD12\\
+LED5 (red)      = I/O port pin PD14\\
+LED6 (blue)     = I/O port pin PD15\\
+User button (blue) = I/O port pin PA0\\
+
+The program is to operate as follows.
+\begin{enumerate}
+	\item Initially, all LEDs are off.
+	\item On the first press of the user button, the LEDs should be turned on with the following
+        pattern:
+        LED3 -- LED4 -- LED6 -- LED5 -- ALL OFF (each LED remains ON until ALL OFF)
+        This pattern is to be repeated until the next button press. Note that you should see LEDs
+        turn on in a counter-clockwise circle.
+        Each step of the pattern is to be held for exactly one-half second.
+	\item On the next press of the user button, the LED pattern is to change to the following:
+        LED3 -- LED5 -- LED6 -- LED4 -- ALL OFF (each LED remains ON until ALL OFF)
+        This pattern is to be repeated until the next button press. Note that you should see LEDs
+        turn on in a clockwise circle.
+        Each step of the pattern is to be held for exactly one-half second.
+	\item On the next button press, return to step 1 (all LEDs off). Then repeat steps 1-4
+        continuously.
+\end{enumerate}
+
+
+The program is to contain the following modules:
+\begin{enumerate}
+	\item  An output handler, written in ARM assembly language, which writes patterns to the
+       LEDs.
+	\item  An input handler, written in ARM assembly language, which tests the user button, and
+       sets a global variable.
+	\item  A system tick timer interrupt handler, written in C, which is activated every one-half
+       second. This routine should call the output handler, if the LEDs are to be changed.
+	\item A main program, written in C, which executes in a continuous loop, calling the input
+       handle every time through the loop.
+   	\item The ``startup code'' for the STM32F4-Discovery board, as found in the Keil installation
+       directory: \\ C:/Keil/ARM/Boards/ST/STM32F4-Discovery/Blinky
+	\item The STM32F4xx microcontroller's ``include file'', found in the Keil installation directory:\\
+       C:/Keil/ARM/INC/ST/STM32F4xx/stm32f4xx.h
+\end{enumerate}
+
+\subsection*{Execution}
+This assignment was completed by writing two assembly language program files, two C files, and one header file. The project that these files where included in was an edited version of the Keil Blinky project. The contents of the ``Blinky'' directory were copied into a new directory. Then \emph{blink.c} and \emph{leds.c} were removed, and replaced by the five before-mentioned files. The ``startup code''  and ``include file'' were both left unchanged. The program works, though occasionally the ``user'' button seems to detect multiple key-presses when it has only been pressed once, which causes the system to skip one of the above mentioned operation states. 
+
+\newpage
+\lstinputlisting{output_handler.s}
+\lstinputlisting{input_handler.s}
+\lstinputlisting[language=C,frame=single,numbers=left,tabsize=4]{tick_timer.c}
+\lstinputlisting[language=C,frame=single,numbers=left,tabsize=4]{main.c}
+\lstinputlisting[language=C,frame=single,numbers=left,tabsize=4]{MAIN.h}
+
+
+
+%  \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=4.0in,keepaspectratio]{E-Field}
+%   \caption{\small{ The E-Field pattern produced by the initial code. }}
+%   \label{fig:E-Field}
+%   \end{figure}
+%  \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=4.0in,keepaspectratio]{Power}
+%   \caption{\small{ The normalized power pattern of the system.  }}
+%   \label{fig:Power}
+%   \end{figure}
+
+\label{end}\end{document}
+
+
