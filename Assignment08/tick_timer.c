@@ -8,10 +8,18 @@
 /*******************************************************/
 /*  ``state'' is a global variable.                    */
 /*******************************************************/
+#include "STM32F4xx.h"
+#include "MAIN.h"
 
+volatile uint32_t msTicks;                      /* counts 1ms timeTicks       */
 
-interrupt void SysTick_Handler ( void ) {
-	if (state != 1) { 		// if not state 1
-		output_handler(); 	// write to LEDS 
-	}				// else, return
+void SysTick_Handler ( void ) {
+	msTicks++;
+	if (msTicks == 500) {
+	msTicks = 0; 								// reset the msTicks
+		if ((state != 1) || (pressed == 1)) { 	// if not state 1
+			output_handler(); 					// write to LEDS 
+		} 										// else, return
+		
+	}
 }

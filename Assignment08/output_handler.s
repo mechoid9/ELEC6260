@@ -27,17 +27,20 @@ BSRRH	EQU 0x1A		;; port D reset
 
 	AREA OUTPUT, CODE
 	EXPORT output_handler
+	IMPORT state
+	IMPORT pressed
 
 output_handler
 	LDR r3, =step		;; get address of step
 	LDR r2, [r3]		;; r2 = step
 	LDR r1, =pressed	;; get address of pressed
 	LDR r0, [r1]		;; r0 = pressed
-	CMP r0, #1		;; if (pressed != 1)
-	BNE step_check	
+	CMP r0, #1		;; if (pressed != 1) (i.e. pressed == 0)
+	BNE step_check		;; jump to step check
 	MOV r2, #0		;; then reset step
 	MOV r0, #0		;; then reset pressed (to leave it alone)
-	MOV r0, [r1]		;; and store the value of pressed
+	STR r0, [r1]		;; and store the value of pressed
+	B clear_leds		;; clear the LEDS for new state
 
 step_check	;; check the step
 	CMP r2, #16		;; if (step == 5)
@@ -54,12 +57,12 @@ state_check	;; check the state
 clear_leds	;; clear the LEDS
 	MOV r4, #1		;; make r4 = 0x0001
 	MOV r5, #12		;; make r5 = 0x000C	
-loop_clear
 	MOV r4, r4, lsl r5	;; bit shift r4 by r5
 	LDR r6, =GPIOD		;; address of GPIOD
+loop_clear
 	STR r4, [r6, #BSRRH]	;; reset the pin
 	MOV r4, r4, lsl #1	;; bit shift r4 once
-	CMP r4, #15		;; if (r4 <= 15) 
+	CMP r4, #0x8000		;; if (r4 <= 15) 
 	BLE loop_clear		;; then branch to loop_clear
 	B exit			;; branch to exit
 
