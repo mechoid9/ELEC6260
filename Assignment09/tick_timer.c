@@ -17,9 +17,18 @@ void SysTick_Handler ( void ) {
 	msTicks++;
 	if (msTicks == 500) {
 	msTicks = 0; 								// reset the msTicks
-		if ((state != 1) || (pressed == 1)) { 	// if not state 1
-			output_handler(); 					// write to LEDS 
-		} 										// else, return
-		
+		if ((pressed == 1) || (step == 4)) { // if I've pressed a button or reached max step
+			step = 0;	// reset the step counter
+			pressed = 0; 	// clear pressed
+			for (int i = 12; i <= 15; i++) { // clear the 4 leds
+				clear_leds(i);
+			}
+	       	} else if (state == 2)  {	//counter clockwise output
+			enable_leds(ccw[step]); //output to appropriate LED
+			step++; //increment step
+		} else if (state == 3) { //clockwise output
+			enable_leds(cw[step]); 	//output to appropriate LED
+			step++; //increment step
+		}
 	}
 }
