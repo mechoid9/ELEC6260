@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;;   Brian Arnberg                       ;;
-;;   Problem Set #5 - Input Handler      ;;
+;;   Problem Set #6 - Input Handler      ;;
 ;;    input_handler.s                    ;;
 ;;     - tests the user button           ;;
 ;;     - sets a global variable          ;;

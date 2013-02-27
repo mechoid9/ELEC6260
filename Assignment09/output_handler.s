@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;   Brian Arnberg                       ;;
-;;   Problem Set #5 - Output Handler     ;;
+;;   Problem Set #6 - Output Handler     ;;
 ;;    output_handler.s                   ;;
 ;;     - provides two functionalities    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

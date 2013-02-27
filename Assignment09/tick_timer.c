@@ -1,6 +1,6 @@
 /*******************************************************/
 /* Brian Arnberg                                       */
-/* Problem Set #5 - System Tick Timer                  */
+/* Problem Set #6 - System Tick Timer                  */
 /*  tick_timer.c                                       */
 /*******************************************************/
 /*  Activates once every half second                   */
@@ -17,10 +17,21 @@ void SysTick_Handler ( void ) {
 	msTicks++;
 	if (msTicks == 500) {
 	msTicks = 0; 								// reset the msTicks
-		if ((pressed == 1) || (step == 4)) { // if I've pressed a button or reached max step
+		__asm("SVC 0");							// Supervisor Call
+	}
+}
+
+void EXTI0_IRQHandler  (void) { // This simply calls the input_handler
+		input_handler();
+	  EXTI->PR = EXTI_Line0;
+	}
+
+void SVC_Handler(void) {
+	int i;
+	if ((pressed == 1) || (step == 4)) { // if I've pressed a button or reached max step
 			step = 0;	// reset the step counter
 			pressed = 0; 	// clear pressed
-			for (int i = 12; i <= 15; i++) { // clear the 4 leds
+			for (i = 12; i <= 15; i++) { // clear the 4 leds
 				clear_leds(i);
 			}
 	       	} else if (state == 2)  {	//counter clockwise output
@@ -30,5 +41,4 @@ void SysTick_Handler ( void ) {
 			enable_leds(cw[step]); 	//output to appropriate LED
 			step++; //increment step
 		}
-	}
 }
