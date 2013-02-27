@@ -10,7 +10,6 @@
 ;;   clear_leds - turns an LED off       ;;
 ;;      - assumes a single argument      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 GPIOD	EQU 0x40020C00		;; general purpose I/O, port D
 BSRRL	EQU 0x18		;; port D set
 BSRRH	EQU 0x1A		;; port D reset
@@ -34,6 +33,5 @@ clear_leds	;; clear the LEDS
 	STR r2, [r3, #BSRRH]    ;; write the pattern in r2 to GPIOD->BSRRH
 				;;  this clears the pin value (passed in the argument)
 	BX r14			;; return from output handler
-
 
 	END

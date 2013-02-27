@@ -4,8 +4,7 @@
 ;;    input_handler.s                    ;;
 ;;     - tests the user button           ;;
 ;;     - sets a global variable          ;;
-;;     - called each time the main       ;;
-;;       loop is executed                ;;
+;;     - triggered by a button press     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     - global variables                ;;
 ;;        - state (represents a pattern) ;;
@@ -16,7 +15,6 @@
 ;;        - pressed (only set here)      ;;
 ;;          1 - it was pressed           ;;
 ;;          0 - it was not pressed       ;;
-;;                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 GPIOA	EQU 0x40020000

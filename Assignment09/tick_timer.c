@@ -1,10 +1,16 @@
 /*******************************************************/
 /* Brian Arnberg                                       */
-/* Problem Set #6 - System Tick Timer                  */
+/* Problem Set #6 - System Interrupts                  */
 /*  tick_timer.c                                       */
 /*******************************************************/
-/*  Activates once every half second                   */
-/*  Calls output_handler (iff LEDS should change)      */
+/*  SysTick_Handler - once every ms                    */
+/*     - calls SVC_Handler every 500ms                 */
+/*  SVC_Handler - called by SysTick                    */
+/*     - handles output based on global variables      */
+/*  EXTI0_IRQHandler - triggered by a button press     */
+/*     - configured in main.c                          */
+/*     - executes the input handler (self-debounced)   */
+/*     - clears pending status                         */
 /*******************************************************/
 /*  ``state'' is a global variable.                    */
 /*******************************************************/
