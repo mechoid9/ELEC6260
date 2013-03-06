@@ -1,0 +1,131 @@
+\documentclass{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+% \usepackage{fullpage, fancyhdr}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage[justification=justified,singlelinecheck=false]{caption}
+\usepackage{subcaption}
+\usepackage{portland}
+\usepackage{graphicx}
+\usepackage{paralist}
+%\usepackage{setspace}
+\setlength{\topmargin}{0.0in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{9pt}
+
+% General tikz + pgf-umlsd
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepgflibrary{arrows}
+\usetikzlibrary{shapes,arrows,shadows}
+\usetikzlibrary{shapes.geometric}
+
+
+
+% Use so that included code is pretty
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},  % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                % sets automatic line breaking
+  captionpos=t,                   % sets the caption-position to bottom
+  commentstyle=\color{dkgreen},   % comment style
+%   deletekeywords={...},           % if you want to delete keywords from the given language
+%   escapeinside={\%*}{*)},         % if you want to add LaTeX within your code
+%   extendedchar=false,             % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                   % adds a frame around the code
+  keywordstyle=\color{blue},      % keyword style
+  language={[x86masm]Assembler},                % the language of the code
+  morekeywords={LDR,AREA,ENTRY,CODE,DATA,DCD,SPACE,BLT,B,BL.W,ADDS,VMOV,MOVEQ,BEQ,BLE,IMPORT,EXPORT,BGT,LDRB,TST,STRB,LSR,},           % if you want to add more keywords to the set
+  numbers=left,                   % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,               % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,         % underline spaces within strings only
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mauve},      % string literal style
+  tabsize=8,                      % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+
+% \pagestyle{fancyplain}
+\pagestyle{myheadings}
+\voffset=-0.50in
+\topmargin=0.00in 
+\headsep=0.25in 
+\evensidemargin=0in 
+\oddsidemargin=0in 
+\textwidth=6.6in 
+\textheight=10.0in 
+
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%   Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}     % 2 may work better
+\setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+\renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+% remember to use [htp] or [htpb] for placement
+
+\title{Assignment \# 8: Problem Set 5}
+\date{2/22/2013}
+\author{Brian Arnberg}
+
+\markright{Brian Arnberg\hfill ELEC 6260 - Embedded Computing Systems\hfill}     
+\setlength{\parindent}{0pt}
+
+\begin{document}\label{start}
+
+% \begin{titlepage}
+% 	\maketitle
+% 	\thispagestyle{empty}
+% \end{titlepage}
+
+
+\section*{Midterm \#1: Rework Problems 3 \& 4 - 03/06/13}
+% -----------------------------------------------%
+% ---------   Problem 3  ------------------------%      
+\subsection*{Problem 3}
+Write an ARM assembly language program to perform the following C ``for loop'':
+\begin{lstlisting}[language=C, frame=none, numbers=none ]
+	for (I = 0; I<300; I=I+1)
+		M[I+1] = (N[I] * 23.25) + M[I];
+\end{lstlisting}
+
+All numbers are to be in Q28.4 format. Variables are stored in the following data area. Arrays M and N have previously been loaded with data.
+\lstinputlisting{midterm_problem3.s}
+
+% -----------------------------------------------%
+% ---------   Problem 4  ------------------------%      
+\newpage
+\subsection*{Problem 4}
+A digital to analog converter contains an 8-bit DATA register (address 0xE0000000) and an 8-bit STATUS register (address 0xE0000001). Conversion of an 8-bit datum from digital to analog form begins when the byte is written to the DATA register. As soon as the buye is written to DATA, the left-most bit of STATUS (called BUSY) is set to 1 and conversion begins. BUSY remains 1 while the conversion takes place and returns to 0 when the conversion is complete.
+
+Using ``busy-wait'' output, write a short subroutine in ARM assembly language that will convert, from digital to analog, 200 bytes stored in an array beginning at address 0x40000000 in memory. 
+\lstinputlisting{midterm_problem4.s}
+
+
+\label{end}\end{document}
+
+
