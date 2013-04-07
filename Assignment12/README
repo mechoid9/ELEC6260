@@ -36,19 +36,14 @@ frequencies. These tones should be heard via the audio mini jack on the board (m
                 LED6                           User button (blue) = I/O port pin PA0
 
 
-PART 1 ­ Generation of data samples.
-Design and program an algorithm (ex. a series approximation) to generate 16-bit data samples at
-the required sampling rate for each selected tone frequency. Ideally, this should be one
-algorithm, with the tone frequency and sample rate as parameters. For testing purposes, you may
-use a sample frequency of 1KHz, which corresponds to the default "System Tick Timer"
-frequency, or you may change the initialization of the System Tick Timer to generate interrupts
-at a frequency of 20KHz.
-Test the algorithm by writing each sample to a global variable and displaying that variable in the
-debugger Logic Analyzer window. (This should show the sinusoidal signal at the tone
-frequency.) The document "Cortex-M4 training for STM32F4-Discovery board using ARM Keil
-MDK toolkit" (especially sections 15 and 19) describes the use of Keil Logic Analyzer to
-graphically display variable values and signals. This document is on the course web site.
-Submit your source program and printouts of the Logic Analyzer window, showing two different
-tones corresponding to the musical notes E and A.
+PART 2 ­ Generation of tones at the headphones.
+  1. Use one of the microcontroller's general-purpose programmable timers, other than the
+     system tick timer, to produce the required 20KHz data sampling frequency (generate
+     new data samples every 1/20KHz = 0.05msec.)
+  2. Convert data samples to analog form with the microcontroller's on-chip digital to analog
+     converter (DAC). (Not the DAC on the CS43L22.)
+  3. Initialize the CS43L22 to "pass through" to the headphones the analog signal from the
+     output of the microcontroller DAC.
+  4. Implement the rest of the button press and LED display requirements.
 
 
