@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;;   Brian Arnberg                       ;;
-;;   Problem Set #6 - Input Handler      ;;
+;;   Problem Set #7 - Input Handler      ;;
 ;;    input_handler.s                    ;;
 ;;     - tests the user button           ;;
 ;;     - sets a global variable          ;;
@@ -54,5 +54,6 @@ loop 	;; while button is pressed
 	B loop		;; remain in while loop
 exit
 	BX r14		;; return from input_handler
+	ALIGN
 	END	
 

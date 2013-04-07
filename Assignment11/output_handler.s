@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;   Brian Arnberg                       ;;
-;;   Problem Set #6 - Output Handler     ;;
+;;   Problem Set #7 - Output Handler     ;;
 ;;    output_handler.s                   ;;
 ;;     - provides two functionalities    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -33,5 +33,5 @@ clear_leds	;; clear the LEDS
 	STR r2, [r3, #BSRRH]    ;; write the pattern in r2 to GPIOD->BSRRH
 				;;  this clears the pin value (passed in the argument)
 	BX r14			;; return from output handler
-
+	ALIGN
 	END

@@ -18,10 +18,10 @@ uint32_t ccw[4] = {13,12,15,14};        /* counter clock-wise pin order         
 uint32_t cw[4] = {13,14,15,12};         /* clock-wise pin order                       */
 
 
-//uint16_t audioSample;				// value of audio sample (16-bit)
-//volatile uint32_t tickNumber;			// current sampling tick
-uint16_t toneFrequency[8] = {131, 147, 165, 175, 195, 220, 247, 262};	// tone frequency (rounded) for C-Major scale
-volatile uint16_t sampleRate = 20000;			// sample rate for the tone (20kHz)
+
+uint32_t tickNumber;			// current sampling tick
+uint16_t sampleRate = 20000;			// sample rate for the tone (20kHz)
+
 
 /**   From stm32f4xx_syscfg.c
   * @brief  Selects the GPIO pin used as EXTI Line.
@@ -154,7 +154,7 @@ int main (void) {
 	pressed = 0;			// Make sure pressed is clear
 	
   SystemCoreClockUpdate();                      /* Get Core Clock Frequency   */
-  if (SysTick_Config(SystemCoreClock / 1000 )) { /* SysTick 1 msec interrupts  */
+  if (SysTick_Config(( SystemCoreClock / sampleRate ))) { /* SysTick 1 msec interrupts  */
     while (1);                                  /* Capture error              */
   }
 		
@@ -163,8 +163,9 @@ int main (void) {
 	BTN_Init();    
 	EXTILine0_Config();
 	EXTI_GenerateSWInterrupt(EXTI_Line0);
-	
-	
+  
+
+			
 	for (;;) { 			// loop forever
 	}
 }

@@ -14,18 +14,21 @@
 #include "stm32f4_discovery.h"
 
 /*  General Globals  */
-extern volatile uint32_t state;				// initialize state
-extern volatile uint32_t step;				// initialize step
-extern volatile uint32_t pressed;			// initialize pressed
-extern uint32_t ccw[4];					// initialize counter clockwise array
-extern uint32_t cw[4];					// initialize clockwise array
-extern volatile uint32_t msTicks;     /* counts 1ms timeTicks       */
+extern volatile uint32_t state;		// initialize state
+extern volatile uint32_t step;		// initialize step
+extern volatile uint32_t pressed;	// initialize pressed
+extern uint32_t ccw[4];			// initialize counter clockwise array
+extern uint32_t cw[4];			// initialize clockwise array
+extern uint32_t msTicks;     		/* counts 1ms timeTicks       */
 
 /*  Audio Globals    */
-extern uint16_t audioSample;				// value of audio sample (16-bit)
-extern volatile uint32_t tickNumber;			// current sampling tick
-extern uint16_t toneFrequency[8];			// frequency for the tone
-extern volatile uint16_t sampleRate;			// sample rate for the tone 
+extern volatile uint32_t audioSample;	// value of audio sample (16-bit)
+extern uint32_t tickNumber;		// current sampling tick
+extern uint32_t tickIncrement;		// how many ticks till next sample change
+extern uint16_t toneFrequency[9];	// frequency for the tone
+extern unsigned int tone;		// current tone
+extern uint16_t sampleRate;		// sample rate for the tone 
+
 
 
 extern void EXTI0_IRQHandler(void); 	// External Interupt Handler
